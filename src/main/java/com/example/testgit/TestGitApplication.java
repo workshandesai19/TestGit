@@ -13,9 +13,7 @@ public class TestGitApplication {
         System.out.print("sharel hahatih");
         System.out.print("avram ya naknik! ");
         System.out.print("mrmita");
-        System.out.print("ima shel liav");
-
-
+        System.out.println("lol, not funny!!!!!!");
     }
 
 }
