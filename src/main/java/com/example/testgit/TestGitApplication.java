@@ -11,6 +11,8 @@ public class TestGitApplication {
 
     public static void main(String[] args) {
         System.out.print("sharel hahatih");
+        System.out.print("avram ya naknik! ");
+
     }
 
 }
