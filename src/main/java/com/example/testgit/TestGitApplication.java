@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TestGitApplication {
 
     public static void main(String[] args) {
-        System.out.print("Hello World");
+        System.out.print("sharel hahatih");
     }
 
 }
