@@ -16,7 +16,65 @@ public class connectPostgreSQL {
             throw new RuntimeException(e);
         }
     }
-//    public Connection connect_to_db(String dbname, String user, String password) {
+
+        public void select(){
+        try
+        {
+            Connection connection = Connecting();
+            System.out.println("select_connection");
+            String sql = "SELECT *" + "FROM public.\"tableOfTestGit\";";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next())
+            {
+                System.out.println("ID: "+ resultSet.getString("ID"));
+                System.out.println("Name: "+ resultSet.getString("Name"));
+                System.out.println();
+            }
+            statement.close();
+            connection.close();
+        }
+        catch(SQLException e)
+        {
+            System.out.println("SQL Exception: "+e);
+        }
+    }
+    public void insert(String new_name, int wher_id){
+        try
+        {
+            Connection connection = Connecting();
+            System.out.println("insert_connection");
+            String sql = "INSERT INTO public.\"tableOfTestGit\"(" + "\"ID\", \"Name\")" + "VALUES (' "+ wher_id +"',' "+ new_name+"');";
+            Statement statement = connection.createStatement();
+            int resultSet = statement.executeUpdate(sql);
+            statement.close();
+            connection.close();
+        }
+        catch(SQLException e)
+        {
+            System.out.println("SQL Exception: "+e);
+        }
+    }
+    public void update(String update_name, int wher_id){
+        try
+        {
+            Connection connection = Connecting();
+            System.out.println("update_connection");
+            System.out.println("Enter new name and ID");
+            String sql = "UPDATE public.\"tableOfTestGit\"" + " SET \"Name\" = ' " + update_name + " ' WHERE \"ID\" = ' " + wher_id + " ';";
+            Statement statement = connection.createStatement();
+            int resultSet = statement.executeUpdate(sql);
+            select();
+            statement.close();
+            connection.close();
+        }
+        catch(SQLException e)
+        {
+            System.out.println("SQL Exception: "+e);
+        }
+    }
+
+    //    public Connection connect_to_db(String dbname, String user, String password) {
 //        Connection conn = null;
 //        try {
 //            Class.forName("org.postgresql.Driver");
@@ -31,49 +89,6 @@ public class connectPostgreSQL {
 //        }
 //        return conn;
 //    }
-
-        public void select(){
-        try
-        {
-            Connection connection = Connecting();
-            String sql = "SELECT \"ID\", \"Name\"\n" + "\tFROM public.\"tableOfTestGit\";";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next())
-            {
-                System.out.println("ID: "+ resultSet.getString("ID"));
-                System.out.println("Name: "+ resultSet.getString("Name"));
-                System.out.println();
-            }
-            statement.close();
-            connection.close();
-        }
-        catch(SQLException e)
-        {
-            System.out.println("SQL Exception: "+e);
-        }
-    }
-    public void update(){
-        try
-        {
-            Connection connection = Connecting();
-            String sql = "UPDATE public.\"tableOfTestGit\"\n" + "\tSET \"Name\"\n" + "\tWHERE \"ID\";";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next())
-            {
-                System.out.println("ID: "+ resultSet.getString("ID"));
-                System.out.println("Name: "+ resultSet.getString("Name"));
-                System.out.println();
-            }
-            statement.close();
-            connection.close();
-        }
-        catch(SQLException e)
-        {
-            System.out.println("SQL Exception: "+e);
-        }
-    }
 //    public void delete(Connection conn, int id_row) {
 //        Statement statement;
 //        try {
