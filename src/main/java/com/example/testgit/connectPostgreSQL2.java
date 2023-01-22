@@ -77,7 +77,6 @@ public class connectPostgreSQL2 {
             statement.setString(1, update_name);
             statement.setInt(2, where_id);
             statement.executeUpdate();
-            select();
             statement.close();
             connection.close();
         }

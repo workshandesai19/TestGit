@@ -41,7 +41,7 @@ class Person{
 
 
 public class listOfData {
-    public Connection Connecting(){
+    public Connection Connecting() {
         String jdbcURL = "jdbc:postgresql://localhost:5432/postgres";
         String userName = "postgres";
         String password = "1234";
@@ -55,21 +55,51 @@ public class listOfData {
         }
     }
 
-    public List<Person> select(){
-        List <Person> person_List = new ArrayList<>();
-        try
-        {
+    public List<Person> select() {
+        List<Person> person_List = new ArrayList<>();
+        try {
             Connection connection = Connecting();
             System.out.println("select_connection");
-            String sql = "SELECT * FROM public.\"tableOfTestGit\";";
+            String sql = "SELECT * FROM public.\"tableOfTestGit\" order by \"ID\" asc;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next())
-            {
-                Person person = new Person( resultSet.getInt("ID") , resultSet.getString("Name"));
+            while (resultSet.next()) {
+                Person person = new Person(resultSet.getInt("ID"), resultSet.getString("Name"));
                 person_List.add(person);
                 System.out.println();
             }
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("SQL Exception: " + e);
+        }
+        return person_List;
+    }
+
+    public void checkValid(int where_id, String name) {
+        List<Person> person_List_checkValid = select();
+        for (Person ID_column : person_List_checkValid) {
+            if (ID_column.getID() == where_id) {
+                return;
+            }
+        }
+        insert(name);
+    }
+
+    public void update(String update_name, int where_id) {
+        String sql = "UPDATE public.\"tableOfTestGit\"" +
+                "\tSET \"Name\"=?" +
+                "\tWHERE \"ID\"=?";
+        try
+        {
+            Connection connection = Connecting();
+            System.out.println("update_connection");
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, update_name);
+            statement.setInt(2, where_id);
+
+            checkValid(where_id, update_name);
+            statement.executeUpdate();
             statement.close();
             connection.close();
         }
@@ -77,30 +107,26 @@ public class listOfData {
         {
             System.out.println("SQL Exception: "+e);
         }
-        return person_List;
     }
-    public List<Person> update(String update_name, int where_id){
-        List <Person> person_List_Update = new ArrayList<>();
-        System.out.println("Enter new name and ID");
-        String sql = "UPDATE public.\"tableOfTestGit\"" +
-                "\tSET \"Name\"=?" +
-                "\tWHERE \"ID\"=?";
-        try {
+
+    public void insert(String name)
+    {
+        String sql = "INSERT INTO public.\"tableOfTestGit\"(" + "\"Name\")" +
+                "VALUES (?);";
+        try
+        {
             Connection connection = Connecting();
-            System.out.println("update_connection");
+            System.out.println("insert_connection");
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, update_name);
-            statement.setInt(2, where_id);
-            statement.executeUpdate();
-            for (:
-                 ) {
-                
-            }
+            statement.setString(1, name);
+            int resultSet = statement.executeUpdate();
             statement.close();
             connection.close();
-        } catch (SQLException e) {
-            System.out.println("SQL Exception: " + e);
         }
-        return person_List_Update;
+        catch(SQLException e)
+        {
+
+            System.out.println("SQL Exception: "+e);
+        }
     }
 }
