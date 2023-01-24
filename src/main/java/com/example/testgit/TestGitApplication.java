@@ -41,10 +41,12 @@ public class TestGitApplication {
 //        Information_Returned = data.update("Moshe", 3);
 //        System.out.println(Information_Returned);
 //        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////");
-        data.update("romCok", 8);
-        Information_Returned = data.select();
-        System.out.println(Information_Returned);
-        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////");
+//        data.update("romCok", 8);
+//        Information_Returned = data.select();
+//        System.out.println(Information_Returned);
+//        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////");
+        data.insert("Liron");
+        System.out.println("Insert successful");
     }
 
 }

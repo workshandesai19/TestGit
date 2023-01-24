@@ -76,16 +76,6 @@ public class listOfData {
         return person_List;
     }
 
-    public void checkValid(int where_id, String name) {
-        List<Person> person_List_checkValid = select();
-        for (Person ID_column : person_List_checkValid) {
-            if (ID_column.getID() == where_id) {
-                return;
-            }
-        }
-        insert(name);
-    }
-
     public void update(String update_name, int where_id) {
         String sql = "UPDATE public.\"tableOfTestGit\"" +
                 "\tSET \"Name\"=?" +
@@ -97,7 +87,6 @@ public class listOfData {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, update_name);
             statement.setInt(2, where_id);
-
             checkValid(where_id, update_name);
             statement.executeUpdate();
             statement.close();
@@ -107,6 +96,16 @@ public class listOfData {
         {
             System.out.println("SQL Exception: "+e);
         }
+    }
+
+    public void checkValid(int where_id, String name) {
+        List<Person> person_List_checkValid = select();
+        for (Person ID_column : person_List_checkValid) {
+            if (ID_column.getID() == where_id) {
+                return;
+            }
+        }
+        insert(name);
     }
 
     public void insert(String name)
